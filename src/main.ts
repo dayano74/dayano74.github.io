@@ -11,24 +11,34 @@ interface Project {
 }
 
 interface Skill {
-	category: string;
-	items: string[];
+	name: string;
+	level: number; // 1-5のスキルレベル
+}
+
+interface Achievement {
+	title: string;
+	year: string;
+	description: string;
 }
 
 // データ
 const skills: Skill[] = [
-	{
-		category: 'フロントエンド',
-		items: ['TypeScript', 'React', 'Vue.js', 'HTML/CSS', 'Tailwind CSS'],
-	},
-	{
-		category: 'バックエンド',
-		items: ['Node.js', 'Python', 'Django', 'Express', 'PostgreSQL'],
-	},
-	{
-		category: 'ツール・環境',
-		items: ['Git', 'Docker', 'AWS', 'CI/CD', 'Linux'],
-	},
+	{ name: 'JavaScript', level: 5 },
+	{ name: 'TypeScript', level: 4 },
+	{ name: 'React', level: 4 },
+	{ name: 'Vue.js', level: 3 },
+	{ name: 'HTML/CSS', level: 5 },
+	{ name: 'Tailwind CSS', level: 4 },
+	{ name: 'Node.js', level: 4 },
+	{ name: 'Python', level: 4 },
+	{ name: 'Django', level: 3 },
+	{ name: 'Express', level: 4 },
+	{ name: 'PostgreSQL', level: 3 },
+	{ name: 'Git', level: 5 },
+	{ name: 'Docker', level: 3 },
+	{ name: 'AWS', level: 3 },
+	{ name: 'CI/CD', level: 3 },
+	{ name: 'Linux', level: 4 },
 ];
 
 const projects: Project[] = [
@@ -54,16 +64,56 @@ const projects: Project[] = [
 	},
 ];
 
+const achievements: Achievement[] = [
+	{
+		title: '基本情報技術者試験 合格',
+		year: '2023',
+		description: '情報処理技術者試験の一つである基本情報技術者試験に合格しました。',
+	},
+	{
+		title: 'ハッカソン優勝',
+		year: '2023',
+		description: '地域のハッカソンイベントに参加し、チームで開発したアプリケーションが最優秀賞を受賞しました。',
+	},
+	{
+		title: 'OSS貢献',
+		year: '2024',
+		description: '人気のオープンソースプロジェクトにPull Requestを送り、マージされました。',
+	},
+];
+
+// 星アイコンを生成する関数
+function createStars(level: number): string {
+	const maxStars = 5;
+	const filledStar = `
+		<svg class="star-icon filled" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+		</svg>
+	`;
+	const emptyStar = `
+		<svg class="star-icon empty" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			<path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/>
+		</svg>
+	`;
+
+	let starsHTML = '';
+	for (let i = 0; i < maxStars; i++) {
+		starsHTML += i < level ? filledStar : emptyStar;
+	}
+	return starsHTML;
+}
+
 // HTMLを生成する関数
 function createHeader(): string {
 	return `
     <header class="header">
       <nav class="nav">
-        <div class="nav-brand">Portfolio</div>
+        <a href="#about" class="nav-brand">Portfolio</a>
         <ul class="nav-menu">
-          <li><a href="#about">About</a></li>
+          <li><a href="#profile">Profile</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#achievements">Achievements</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <button class="nav-toggle" aria-label="メニューを開く">
@@ -81,18 +131,33 @@ function createHero(): string {
     <section class="hero" id="about">
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">
-            こんにちは、<br>
-            <span class="hero-name">あなたの名前</span>です
-          </h1>
-          <p class="hero-subtitle">フルスタックエンジニア / Web開発者</p>
-          <p class="hero-description">
-            情熱を持ってコードを書いています。<br>
-            ユーザー体験を向上させるWebアプリケーションの開発が得意です。
-          </p>
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary">プロジェクトを見る</a>
-            <a href="#contact" class="btn btn-secondary">お問い合わせ</a>
+          <h1 class="hero-title">dayano74's Portfolio</h1>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function createProfile(): string {
+	return `
+    <section class="profile" id="profile">
+      <div class="container">
+        <h2 class="section-title">Profile</h2>
+        <div class="profile-content">
+          <div class="profile-icon">
+            <div class="profile-avatar">👨‍💻</div>
+          </div>
+          <div class="profile-text">
+            <p class="profile-description">
+              はじめまして、dayano74と申します。<br>
+              Web開発を中心に、フルスタックエンジニアとして活動しています。<br>
+              <br>
+              フロントエンドではReact、TypeScript、Vue.jsなどを使用し、<br>
+              バックエンドではNode.js、Python、PostgreSQLなどを扱っています。<br>
+              <br>
+              ユーザー体験を大切にしたWebアプリケーションの開発が得意です。<br>
+              新しい技術を学ぶことが好きで、常にスキルアップを心がけています。
+            </p>
           </div>
         </div>
       </div>
@@ -104,10 +169,12 @@ function createSkills(): string {
 	const skillsHTML = skills
 		.map(
 			(skill) => `
-    <div class="skill-category">
-      <h3 class="skill-category-title">${skill.category}</h3>
-      <div class="skill-items">
-        ${skill.items.map((item) => `<span class="skill-tag">${item}</span>`).join('')}
+    <div class="skill-card">
+      <div class="skill-content">
+        <div class="skill-name">${skill.name}</div>
+        <div class="skill-stars">
+          ${createStars(skill.level)}
+        </div>
       </div>
     </div>
   `
@@ -117,7 +184,7 @@ function createSkills(): string {
 	return `
     <section class="skills" id="skills">
       <div class="container">
-        <h2 class="section-title">スキル・技術スタック</h2>
+        <h2 class="section-title">Skills</h2>
         <div class="skills-grid">
           ${skillsHTML}
         </div>
@@ -156,6 +223,33 @@ function createProjects(): string {
         <h2 class="section-title">プロジェクト</h2>
         <div class="projects-grid">
           ${projectsHTML}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function createAchievements(): string {
+	const achievementsHTML = achievements
+		.map(
+			(achievement) => `
+    <div class="achievement-card">
+      <div class="achievement-year">${achievement.year}</div>
+      <div class="achievement-content">
+        <h3 class="achievement-title">${achievement.title}</h3>
+        <p class="achievement-description">${achievement.description}</p>
+      </div>
+    </div>
+  `
+		)
+		.join('');
+
+	return `
+    <section class="achievements" id="achievements">
+      <div class="container">
+        <h2 class="section-title">実績・資格</h2>
+        <div class="achievements-grid">
+          ${achievementsHTML}
         </div>
       </div>
     </section>
@@ -221,8 +315,10 @@ function init(): void {
     ${createHeader()}
     <main>
       ${createHero()}
+      ${createProfile()}
       ${createSkills()}
       ${createProjects()}
+      ${createAchievements()}
       ${createContact()}
     </main>
     ${createFooter()}
@@ -286,7 +382,7 @@ function setupScrollAnimations(): void {
 		{ threshold: 0.1 }
 	);
 
-	document.querySelectorAll('.project-card, .skill-category').forEach((el) => {
+	document.querySelectorAll('.project-card, .skill-card, .achievement-card').forEach((el) => {
 		observer.observe(el);
 	});
 }

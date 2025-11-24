@@ -70,6 +70,14 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
+	text-decoration: none;
+	transition: var(--transition);
+	cursor: pointer;
+}
+
+.nav-brand:hover {
+	opacity: 0.8;
+	transform: scale(1.05);
 }
 
 .nav-menu {
@@ -124,60 +132,19 @@ body {
 
 /* ヒーローセクション */
 .hero {
-	min-height: 100vh;
+	min-height: 60vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	background-size: 200% 200%;
-	animation: gradientShift 15s ease infinite;
-	position: relative;
-	overflow: hidden;
-}
-
-@keyframes gradientShift {
-
-	0%,
-	100% {
-		background-position: 0% 50%;
-	}
-
-	50% {
-		background-position: 100% 50%;
-	}
-}
-
-.hero::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background:
-		radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
-		radial-gradient(circle at 80% 80%, rgba(138, 92, 246, 0.3), transparent 50%),
-		radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.2), transparent 50%);
-	animation: float 20s ease-in-out infinite;
-}
-
-@keyframes float {
-
-	0%,
-	100% {
-		transform: translate(0, 0);
-	}
-
-	50% {
-		transform: translate(20px, 20px);
-	}
+	border-bottom: 1px solid #e5e7eb;
+	padding-top: 150px;
+	/* ヘッダーの高さ + 余白 */
+	box-sizing: border-box;
 }
 
 .hero-content {
-	position: relative;
-	z-index: 1;
 	text-align: center;
-	color: white;
 	animation: fadeInUp 1s ease;
 }
 
@@ -194,72 +161,17 @@ body {
 }
 
 .hero-title {
-	font-size: 3rem;
+	font-size: 3.5rem;
 	font-weight: 700;
-	margin-bottom: 1rem;
+	margin-bottom: 0;
 	line-height: 1.2;
-}
-
-.hero-name {
-	display: inline-block;
-	background: linear-gradient(135deg, #fbbf24, #f59e0b);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+	color: white;
 }
 
 .hero-subtitle {
 	font-size: 1.5rem;
-	margin-bottom: 1.5rem;
-	opacity: 0.9;
-}
-
-.hero-description {
-	font-size: 1.125rem;
-	margin-bottom: 2.5rem;
-	opacity: 0.85;
-	max-width: 600px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.hero-buttons {
-	display: flex;
-	gap: 1rem;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-
-.btn {
-	display: inline-block;
-	padding: 0.875rem 2rem;
-	border-radius: 0.5rem;
-	text-decoration: none;
-	font-weight: 600;
-	transition: var(--transition);
-	border: 2px solid transparent;
-}
-
-.btn-primary {
-	background-color: white;
-	color: var(--color-primary);
-}
-
-.btn-primary:hover {
-	transform: translateY(-2px);
-	box-shadow: var(--shadow-lg);
-}
-
-.btn-secondary {
-	background-color: transparent;
-	color: white;
-	border-color: white;
-}
-
-.btn-secondary:hover {
-	background-color: white;
-	color: var(--color-primary);
-	transform: translateY(-2px);
+	color: var(--color-text-light);
+	font-weight: 400;
 }
 
 /* セクション共通 */
@@ -285,6 +197,45 @@ section {
 	border-radius: 2px;
 }
 
+/* プロフィールセクション */
+.profile {
+	background-color: var(--color-bg);
+}
+
+.profile-content {
+	display: flex;
+	gap: 3rem;
+	align-items: flex-start;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.profile-icon {
+	flex-shrink: 0;
+}
+
+.profile-avatar {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 4rem;
+	box-shadow: var(--shadow-lg);
+}
+
+.profile-text {
+	flex: 1;
+}
+
+.profile-description {
+	font-size: 1.125rem;
+	line-height: 1.8;
+	color: var(--color-text);
+}
+
 /* スキルセクション */
 .skills {
 	background-color: var(--color-bg-secondary);
@@ -292,21 +243,24 @@ section {
 
 .skills-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	gap: 2rem;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 1.5rem;
+	max-width: 900px;
+	margin: 0 auto;
 }
 
-.skill-category {
+.skill-card {
 	background-color: var(--color-card);
-	padding: 2rem;
+	padding: 1.5rem 1.25rem;
 	border-radius: 1rem;
 	box-shadow: var(--shadow-md);
 	transition: var(--transition);
+	cursor: default;
 	opacity: 0;
 	transform: translateY(20px);
 }
 
-.skill-category.animate {
+.skill-card.animate {
 	opacity: 1;
 	transform: translateY(0);
 	animation: slideUp 0.6s ease forwards;
@@ -324,39 +278,58 @@ section {
 	}
 }
 
-.skill-category:hover {
+.skill-card:hover {
 	transform: translateY(-5px);
 	box-shadow: var(--shadow-xl);
+	background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
 }
 
-.skill-category-title {
-	font-size: 1.5rem;
-	font-weight: 700;
-	margin-bottom: 1.5rem;
-	color: var(--color-primary);
+.skill-card:hover .skill-name {
+	color: white;
 }
 
-.skill-items {
+.skill-card:hover .star-icon.filled {
+	color: white;
+}
+
+.skill-card:hover .star-icon.empty {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.skill-content {
 	display: flex;
-	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
 	gap: 0.75rem;
 }
 
-.skill-tag {
-	display: inline-block;
-	padding: 0.5rem 1rem;
-	background-color: var(--color-bg-secondary);
-	border-radius: 0.5rem;
-	font-size: 0.875rem;
-	font-weight: 500;
+.skill-name {
+	font-size: 1rem;
+	font-weight: 600;
 	color: var(--color-text);
+	transition: var(--transition);
+	flex: 1;
+	text-align: left;
+}
+
+.skill-stars {
+	display: flex;
+	gap: 0.125rem;
+	flex-shrink: 0;
+}
+
+.star-icon {
+	width: 16px;
+	height: 16px;
 	transition: var(--transition);
 }
 
-.skill-tag:hover {
-	background-color: var(--color-primary);
-	color: white;
-	transform: scale(1.05);
+.star-icon.filled {
+	color: #fbbf24;
+}
+
+.star-icon.empty {
+	color: #d1d5db;
 }
 
 /* プロジェクトセクション */
@@ -462,6 +435,66 @@ section {
 	transform: scale(1.05);
 }
 
+/* 実績・資格セクション */
+.achievements {
+	background-color: var(--color-bg);
+}
+
+.achievements-grid {
+	display: grid;
+	gap: 2rem;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.achievement-card {
+	display: flex;
+	gap: 2rem;
+	background-color: var(--color-card);
+	padding: 2rem;
+	border-radius: 1rem;
+	box-shadow: var(--shadow-md);
+	transition: var(--transition);
+	opacity: 0;
+	transform: translateY(20px);
+	align-items: flex-start;
+}
+
+.achievement-card.animate {
+	opacity: 1;
+	transform: translateY(0);
+	animation: slideUp 0.6s ease forwards;
+}
+
+.achievement-card:hover {
+	transform: translateY(-5px);
+	box-shadow: var(--shadow-xl);
+}
+
+.achievement-year {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--color-primary);
+	min-width: 80px;
+	flex-shrink: 0;
+}
+
+.achievement-content {
+	flex: 1;
+}
+
+.achievement-title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+	color: var(--color-text);
+}
+
+.achievement-description {
+	color: var(--color-text-light);
+	line-height: 1.6;
+}
+
 /* コンタクトセクション */
 .contact {
 	background-color: var(--color-bg-secondary);
@@ -561,19 +594,32 @@ section {
 	}
 
 	.hero-title {
-		font-size: 2rem;
+		font-size: 2.5rem;
 	}
 
 	.hero-subtitle {
 		font-size: 1.25rem;
 	}
 
-	.hero-description {
-		font-size: 1rem;
-	}
-
 	.section-title {
 		font-size: 2rem;
+	}
+
+	.profile-content {
+		flex-direction: column;
+		gap: 2rem;
+		align-items: center;
+		text-align: center;
+	}
+
+	.profile-avatar {
+		width: 120px;
+		height: 120px;
+		font-size: 3rem;
+	}
+
+	.profile-description {
+		font-size: 1rem;
 	}
 
 	.projects-grid {
@@ -581,7 +627,47 @@ section {
 	}
 
 	.skills-grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 1rem;
+	}
+
+	.skill-card {
+		padding: 1.25rem 1rem;
+	}
+
+	.skill-content {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+
+	.skill-name {
+		font-size: 0.9rem;
+		text-align: center;
+		width: 100%;
+	}
+
+	.skill-stars {
+		justify-content: center;
+		width: 100%;
+	}
+
+	.star-icon {
+		width: 14px;
+		height: 14px;
+	}
+
+	.achievement-card {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.achievement-year {
+		font-size: 1.125rem;
+	}
+
+	.achievement-title {
+		font-size: 1.125rem;
 	}
 
 	.contact-links {
@@ -601,14 +687,10 @@ section {
 	}
 
 	.hero-title {
-		font-size: 1.75rem;
+		font-size: 2rem;
 	}
 
-	.hero-buttons {
-		flex-direction: column;
-	}
-
-	.btn {
-		width: 100%;
+	.hero-subtitle {
+		font-size: 1.125rem;
 	}
 }
