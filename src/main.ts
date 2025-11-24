@@ -261,7 +261,6 @@ function setupEventListeners(): void {
 	});
 
 	// スクロール時のヘッダー
-	let lastScroll = 0;
 	window.addEventListener('scroll', () => {
 		const header = document.querySelector('.header');
 		const currentScroll = window.pageYOffset;
@@ -271,8 +270,6 @@ function setupEventListeners(): void {
 		} else {
 			header?.classList.remove('scrolled');
 		}
-
-		lastScroll = currentScroll;
 	});
 }
 
